@@ -1,0 +1,8 @@
+createddb:
+	docker exec -it postgres12 createdb --username=root --owner=root ksfirstbank
+
+dropdb:
+	docker exec -it postgres12 dropdb --if-exists ksfirstbank
+
+
+.PHONY: createdb 

@@ -1,0 +1,36 @@
+Table ksbnk_accounts as A {
+  id bigserial [pk]
+  owner varchar [not null]
+  balance bigint [not null]
+  currency varchar [not null]
+  created_at timestamptz [not null, default: 'now()']
+
+  Indexes {
+    owner
+  }
+}
+
+Table ksbnk_entries {
+  id bigserial [pk]
+  account_id bigint [ref: > A.id, not null]
+  amount bigint [not null, note: 'Can be neg/pos values']
+  created_at timestamptz [not null, default: 'now()']
+
+  Indexes {
+    account_id
+  }
+}
+
+Table ksbnk_transfers {
+  id bigserial [pk]
+  from_account_id bigint [ref: > A.id, not null]
+  to_account_id bigint [ref: > A.id, not null]
+  amount bigint [not null, note: 'Must be positive value']
+  created_at timestamptz [not null, default: 'now()']
+
+    Indexes {
+    from_account_id
+    to_account_id
+    ( from_account_id, to_account_id )
+  }
+}
