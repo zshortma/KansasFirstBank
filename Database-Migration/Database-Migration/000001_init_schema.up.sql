@@ -1,36 +1,42 @@
-Table ksbnk_accounts as A {
-  id bigserial [pk]
-  owner varchar [not null]
-  balance bigint [not null]
-  currency varchar [not null]
-  created_at timestamptz [not null, default: 'now()']
+CREATE TABLE "ksbnk_accounts" (
+  "id" bigserial PRIMARY KEY,
+  "owner" varchar NOT NULL,
+  "balance" bigint NOT NULL,
+  "currency" varchar NOT NULL,
+  "created_at" timestamptz NOT NULL DEFAULT 'now()'
+);
 
-  Indexes {
-    owner
-  }
-}
+CREATE TABLE "ksbnk_entries" (
+  "id" bigserial PRIMARY KEY,
+  "account_id" bigint NOT NULL,
+  "amount" bigint NOT NULL,
+  "created_at" timestamptz NOT NULL DEFAULT 'now()'
+);
 
-Table ksbnk_entries {
-  id bigserial [pk]
-  account_id bigint [ref: > A.id, not null]
-  amount bigint [not null, note: 'Can be neg/pos values']
-  created_at timestamptz [not null, default: 'now()']
+CREATE TABLE "ksbnk_transfers" (
+  "id" bigserial PRIMARY KEY,
+  "from_account_id" bigint NOT NULL,
+  "to_account_id" bigint NOT NULL,
+  "amount" bigint NOT NULL,
+  "created_at" timestamptz NOT NULL DEFAULT 'now()'
+);
 
-  Indexes {
-    account_id
-  }
-}
+CREATE INDEX ON "ksbnk_accounts" ("owner");
 
-Table ksbnk_transfers {
-  id bigserial [pk]
-  from_account_id bigint [ref: > A.id, not null]
-  to_account_id bigint [ref: > A.id, not null]
-  amount bigint [not null, note: 'Must be positive value']
-  created_at timestamptz [not null, default: 'now()']
+CREATE INDEX ON "ksbnk_entries" ("account_id");
 
-    Indexes {
-    from_account_id
-    to_account_id
-    ( from_account_id, to_account_id )
-  }
-}
+CREATE INDEX ON "ksbnk_transfers" ("from_account_id");
+
+CREATE INDEX ON "ksbnk_transfers" ("to_account_id");
+
+CREATE INDEX ON "ksbnk_transfers" ("from_account_id", "to_account_id");
+
+COMMENT ON COLUMN "ksbnk_entries"."amount" IS 'Can be neg/pos values';
+
+COMMENT ON COLUMN "ksbnk_transfers"."amount" IS 'Must be positive value';
+
+ALTER TABLE "ksbnk_entries" ADD FOREIGN KEY ("account_id") REFERENCES "ksbnk_accounts" ("id") DEFERRABLE INITIALLY IMMEDIATE;
+
+ALTER TABLE "ksbnk_transfers" ADD FOREIGN KEY ("from_account_id") REFERENCES "ksbnk_accounts" ("id") DEFERRABLE INITIALLY IMMEDIATE;
+
+ALTER TABLE "ksbnk_transfers" ADD FOREIGN KEY ("to_account_id") REFERENCES "ksbnk_accounts" ("id") DEFERRABLE INITIALLY IMMEDIATE;
