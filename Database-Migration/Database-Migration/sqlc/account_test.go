@@ -4,14 +4,15 @@ import (
 	"context"
 	"testing"
 
+	"github.com/KansasFirstBank/Database-Migration/util"
 	"github.com/stretchr/testify/require"
 )
 
 func TestCreateAccount(t *testing.T) {
 	args := CreateAccountParams{
-		Owner:    "Zoe Doe",
-		Balance:  1000,
-		Currency: "USD",
+		Owner:    util.RandomOwner(),
+		Balance:  util.RandomMoney(),
+		Currency: util.RandomCurrency(),
 	}
 
 	account, err := testQueries.CreateAccount(context.Background(), args)
