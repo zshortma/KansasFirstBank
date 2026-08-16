@@ -26,3 +26,9 @@ RETURNING *;
 -- name: DeleteAccount :exec
 DELETE FROM ksbnk_accounts
 WHERE id = $1;
+
+-- name: AddAccountBalance :one
+UPDATE ksbnk_accounts
+SET balance = balance + sqlc.arg(amount)
+WHERE id = sqlc.arg(id)
+RETURNING *;
