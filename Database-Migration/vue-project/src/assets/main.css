@@ -1,4 +1,7 @@
-
+/* PrimeVue v5 no longer provides the old 'resources/themes' CSS path.
+  Remove the missing theme import to avoid Vite errors. Add a compatible
+  PrimeVue theme or install a legacy PrimeVue theme package if you need it. */
+@import 'primeicons/primeicons.css';
 #app {
   max-width: 1280px;
   margin: 0 auto;
