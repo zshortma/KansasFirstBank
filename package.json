@@ -1,5 +1,6 @@
 {
   "dependencies": {
+    "primeflex": "^4.0.0",
     "primeicons": "^8.0.0",
     "primevue": "^5.0.1",
     "vue-router": "^5.3.0"
