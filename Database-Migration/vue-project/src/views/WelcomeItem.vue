@@ -16,6 +16,7 @@ main {
     justify-content: center;
     min-height: 60vh;
     padding: 1rem;
+    color: #0f5076;
 }
 .blue {
     color: #0f5076;

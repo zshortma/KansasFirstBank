@@ -1,14 +1,19 @@
 <script setup lang="ts">
-import { ref } from 'vue'
+import { computed, ref } from 'vue'
 import InputGroup from 'primevue/inputgroup'
 import InputGroupAddon from 'primevue/inputgroupaddon'
 import FloatLabel from 'primevue/floatlabel'
 import InputText from 'primevue/inputtext'
 
+
 const username = ref('')
 const password = ref('')
 const loading = ref(false)
+const isLoginDisabled = computed(() => !username.value || !password.value)
 
+const handleLogin = () => {
+  console.log('Button clicked');
+}
 function onSubmit() {
   loading.value = true
   // placeholder: replace with real auth call
@@ -52,7 +57,7 @@ function onSubmit() {
       </div>
 
       <div class="actions">
-        <button type="submit" class="btn" :disabled="loading">
+        <button type="submit" class="btn" :disabled="loading || isLoginDisabled" @click="handleLogin">
           <span v-if="!loading">Sign In</span>
           <span v-else>Signing…</span>
         </button>
@@ -71,7 +76,7 @@ function onSubmit() {
   margin: 0.5rem auto;
   padding: 1.5rem;
   border-radius: 12px;
-  background: linear-gradient(180deg, rgba(255,255,255,0.85), rgba(250,250,250,0.95));
+  background: linear-gradient(180deg, #fff8cc 0%, #f6e27a 100%);
   box-shadow: 0 8px 24px rgba(16,24,40,0.08);
 }
 .login-header h2 {
