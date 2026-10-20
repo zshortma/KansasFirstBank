@@ -45,6 +45,7 @@ jobs:
 
       - name: Run migrations
         run: make migrateup
+        working-directory: Database-Migration
 
       - name: Test
         run: make test
