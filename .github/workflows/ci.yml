@@ -43,8 +43,12 @@ jobs:
           sudo mv migrate.linux-amd64 /usr/bin/migrate
           which migrate
 
-      - name: Run migrations
-        run: make migrateup
+      - name: Debug Makefile
+        run: |
+          pwd
+          ls -la
+          cat Makefile
+          make -n migrateup
         working-directory: Database-Migration
 
       - name: Test
