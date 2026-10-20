@@ -8,3 +8,4 @@ Kansas First Bank Project
 8/10 - 8/29 Additional backend set up.
 8/30/2026 Add foundation for VUE/Typescript Frontend.
 10/18/2026 Working on frontend/Backend Login functionailty
+10/20/2026 Setup Github actions
