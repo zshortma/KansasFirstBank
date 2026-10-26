@@ -9,3 +9,4 @@ Kansas First Bank Project
 8/30/2026 Add foundation for VUE/Typescript Frontend.
 10/18/2026 Working on frontend/Backend Login functionailty
 10/20/2026 Setup Github actions
+10/25/2026 Implement REST API's using Gin + test with Postman
