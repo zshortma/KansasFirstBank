@@ -6,27 +6,24 @@ import (
 
 	db "github.com/KansasFirstBank/Database-Migration/sqlc"
 	"github.com/KansasFirstBank/api"
+	"github.com/KansasFirstBank/util"
 	_ "github.com/lib/pq"
 )
 
-const (
-	dbDriver      = "postgres"
-	dbSource      = "postgresql://root:secret@localhost:5432/kansas_bank?sslmode=disable"
-	serverAddress = "0.0.0.0:8080"
-)
-
 func main() {
-	conn, err := sql.Open(dbDriver, dbSource)
+	config, err := util.LoadConfig("./Database-Migration")
 	if err != nil {
 		log.Fatal("cannot connect to db:", err)
 	}
-
+	conn, err := sql.Open(config.DBDriver, config.DBSource)
+	if err != nil {
+		log.Fatal("cannot connect to db:", err)
+	}
 	store := db.NewStore(conn)
-
 	server := api.NewServer(store)
-	err = server.Start(serverAddress)
+
+	err = server.Start(config.ServerAddress)
 	if err != nil {
 		log.Fatal("cannot start server:", err)
 	}
-
 }
