@@ -10,3 +10,4 @@ Kansas First Bank Project
 10/18/2026 Working on frontend/Backend Login functionailty
 10/20/2026 Setup Github actions
 10/25/2026 Implement REST API's using Gin + test with Postman
+11/2/2026 Adding transfer API and Currency validator
